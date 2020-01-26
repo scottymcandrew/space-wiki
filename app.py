@@ -28,7 +28,7 @@ def add_vote(def_id):
                            {
                                '$inc': {'votes': 1}
                            })
-    return redirect(url_for('space'))
+    return redirect(url_for('get_definitions'))
 
 
 if __name__ == '__main__':
