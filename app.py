@@ -21,6 +21,16 @@ def get_definitions():
                            definitions=coll)
 
 
+@app.route('/add_vote/<def_id>', methods=['POST'])
+def add_vote(def_id):
+    definitions = mongo.db.definitions
+    definitions.update_one({'_id': ObjectId(def_id)},
+                           {
+                               '$inc': {'votes': 1}
+                           })
+    return redirect(url_for('space'))
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

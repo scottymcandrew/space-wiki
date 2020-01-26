@@ -10,7 +10,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
                         <p class="card-text">{{ d.definition }}</p>
                         <div class="card-links-container">
-                            <button type="button" class="btn btn-info"><a href="#" class="card-link text-reset"><i
+                            <button type="button" class="btn btn-info"><a
+                                    href="{{ url_for('add_vote', def_id=d._id) }}"
+                                    class="card-link text-reset"><i
                                     class="fas fa-thumbs-up"></i></a> {{ d.votes }}</button>
                             <a href="https://en.wikipedia.org/wiki/{{ d.definition_name }}" target="_blank"
                                class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
