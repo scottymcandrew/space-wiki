@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="row text-decoration-none">
-        <div class="col-lg-9 card-section">
+        <div class="col-md-9 card-section">
             {# Available items on DB: {{ d.definition_name }} {{ d.definition }} {{ d.author }} {{ d.date }} {{ d.votes }} {{ d.top_definition }} #}
             {% for d in definitions %}
                 <div class="card text-white bg-dark">
@@ -20,7 +20,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="col-lg-3 d-none d-sm-none d-md-block side-content">
+        <div class="col-md-3 d-none d-sm-none d-md-block side-content">
             <div class="card bg-light text-center">
                 <img src="../static/images/saturn.png" alt="Planet Saturn" class="card-img-top">
                 <div class="card-body">
