@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="row">
-        {% for d in definitions %}
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ d.definition_name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
-                    <p class="card-text">{{ d.definition }}</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+    <div class="row text-decoration-none">
+        <div class="col-lg-9 card-section">
+            {# Available items on DB: {{ d.definition_name }} {{ d.definition }} {{ d.author }} {{ d.date }} {{ d.votes }} {{ d.top_definition }} #}
+            {% for d in definitions %}
+                <div class="card text-white bg-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ d.definition_name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
+                        <p class="card-text">{{ d.definition }}</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
                 </div>
-            </div>
-            {{ d.definition_name }} {{ d.definition }} {{ d.author }} {{ d.date }}
-            {{ d.votes }} {{ d.top_definition }}
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-lg-3 d-none d-sm-none d-md-block side-content">
+            <div class="card bg-light text-center">
+                <img src="../static/images/saturn.png" alt="Planet Saturn" class="card-img-top">
+                <div class="card-body">
+                    <h3 class="card-title">The Final 'Definition' Frontier</h3>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text">Space and Astronomical terms that are out of this world!</p>
+                    <button type="button" class="btn btn-block btn-info"><a href="#" class="card-link text-reset"><i class="fas fa-plus-circle"></i></a></button>
+                </div>
 
+            </div>
+        </div>
     </div>
+
 {% endblock %}

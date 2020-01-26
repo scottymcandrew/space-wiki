@@ -9,14 +9,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
 
-    <title>A Galaxy Far, Far Away...</title>
+    <title>The Final 'Definition' Frontier</title>
 </head>
 <body>
 <header>
+
     <nav class="navbar navbar-expand-md navbar-dark">
-        <a class="navbar-brand" href="#"><img src="../static/images/logo.png" width="50%" height="50%" alt=""></a>
+        <a class="navbar-brand" href="#"><img src="../static/images/saturn-icon.png"
+                                              class="d-inline-block align-top"
+                                              alt="Planet icon"></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,8 +28,11 @@
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-block btn-info"><a href="#"
+                                                                            class="card-link text-reset"><i
+                            class="fas fa-plus-circle"></i></a>
+                    </button>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
@@ -34,6 +41,7 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
+            
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
@@ -41,7 +49,7 @@
         </div>
     </nav>
 </header>
-<section class="container">
+<section class="container-fluid main-content">
     {% block content %} {% endblock %}
 </section>
 
@@ -56,5 +64,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/61858eedb6.js" crossorigin="anonymous"></script>
 </body>
 </html>
