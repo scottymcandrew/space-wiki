@@ -9,8 +9,13 @@
                         <h5 class="card-title">{{ d.definition_name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
                         <p class="card-text">{{ d.definition }}</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <div class="card-links-container">
+                            <button type="button" class="btn btn-info"><a href="#" class="card-link text-reset"><i
+                                    class="fas fa-thumbs-up"></i></a> {{ d.votes }}</button>
+                            <a href="https://en.wikipedia.org/wiki/{{ d.definition_name }}" target="_blank"
+                               class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -22,7 +27,8 @@
                     <h3 class="card-title">The Final 'Definition' Frontier</h3>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">Space and Astronomical terms that are out of this world!</p>
-                    <button type="button" class="btn btn-block btn-info"><a href="#" class="card-link text-reset"><i class="fas fa-plus-circle"></i></a></button>
+                    <button type="button" class="btn btn-block btn-info"><a href="#" class="card-link text-reset"><i
+                            class="fas fa-plus-circle"></i></a></button>
                 </div>
 
             </div>
