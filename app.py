@@ -31,6 +31,18 @@ def add_vote(def_id):
     return redirect(url_for('get_definitions'))
 
 
+@app.route('/add_definition')
+def add_definition():
+    return render_template('add_definition.html')
+
+
+@app.route('/insert_definition', methods=['POST'])
+def insert_definition():
+    definitions = mongo.db.definitions
+    definitions.insert_one(request.form.to_dict())
+    return redirect(url_for('get_definitions'))
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
