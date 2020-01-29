@@ -1,7 +1,7 @@
 import os
-
+import datetime
 import pymongo
-from flask import Flask, render_template, redirect, request, url_for, request
+from flask import Flask, flash, render_template, redirect, request, url_for, request
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
@@ -24,6 +24,9 @@ def get_definitions():
 @app.route('/add_vote/<def_id>', methods=['POST'])
 def add_vote(def_id):
     definitions = mongo.db.definitions
+    # **************************************************
+    # ***** NEED TO ADD LOGIC TO CHECK TOP DEFINITION!!!
+    # **************************************************
     definitions.update_one({'_id': ObjectId(def_id)},
                            {
                                '$inc': {'votes': 1}
@@ -39,7 +42,22 @@ def add_definition():
 @app.route('/insert_definition', methods=['POST'])
 def insert_definition():
     definitions = mongo.db.definitions
-    definitions.insert_one(request.form.to_dict())
+    # Take data from HTML form
+    data = request.form.to_dict()
+    # Add in the current date / time and initialise vote count
+    data['date'] = datetime.datetime.now()
+    data['votes'] = 1
+    # Check MongoDB Database if definition exists. If unique, sets 'top_definition' to True
+    query = {'definition_name': data['definition_name']}
+    cursor = definitions.find(query)
+    # Need to use count() function of cursor to get the length
+    cursor_length = cursor.count()
+    # If no matches were found for the same definition name, it will be the top definition
+    if cursor_length == 0:
+        data['top_definition'] = True
+    else:
+        data['top_definition'] = False
+    definitions.insert_one(data)
     return redirect(url_for('get_definitions'))
 
 
