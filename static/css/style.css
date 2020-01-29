@@ -30,3 +30,12 @@ nav {
     margin-top: 25px;
     padding-left: 0;
 }
+
+.flash-row {
+    margin-top: 15px;
+}
+
+.alert {
+    background-color: #563d7c!important;
+    color: #FFFFFF!important;
+}

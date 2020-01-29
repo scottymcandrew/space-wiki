@@ -2,6 +2,19 @@
 {% block content %}
     <div class="row text-decoration-none">
         <div class="col-md-9 card-section">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="row flash-row">
+                        <div class="col-12">
+                            <div class="alert alert-danger flashes" role="alert">
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
             {# Available items on DB: {{ d.definition_name }} {{ d.definition }} {{ d.author }} {{ d.date }} {{ d.votes }} {{ d.top_definition }} #}
             {% for d in definitions %}
                 <div class="card text-white bg-dark">
@@ -30,8 +43,10 @@
                     <h3 class="card-title">The Final 'Definition' Frontier</h3>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">Space and Astronomical terms that are out of this world!</p>
-                    <a href="{{ url_for('add_definition') }}" class="card-link text-reset"><button type="button" class="btn btn-block btn-info"><i
-                            class="fas fa-plus-circle"></i></button></a>
+                    <a href="{{ url_for('add_definition') }}" class="card-link text-reset">
+                        <button type="button" class="btn btn-block btn-info"><i
+                                class="fas fa-plus-circle"></i></button>
+                    </a>
                 </div>
 
             </div>

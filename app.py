@@ -1,13 +1,14 @@
 import os
 import datetime
 import pymongo
-from flask import Flask, flash, render_template, redirect, request, url_for, request
+from flask import Flask, session, flash, render_template, redirect, request, url_for, request
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'space_definitions'
 app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
+app.secret_key = 'supersecretk3y'
 
 mongo = PyMongo(app)
 
@@ -31,6 +32,7 @@ def add_vote(def_id):
                            {
                                '$inc': {'votes': 1}
                            })
+    flash('Thank you for voting!')
     return redirect(url_for('get_definitions'))
 
 
@@ -55,10 +57,10 @@ def insert_definition():
     # If no matches were found for the same definition name, it will be the top definition
     if cursor_length == 0:
         data['top_definition'] = True
-        # flash('Congratulations, you are as smart as Spock, this is the first definition!')
+        flash('Congratulations, you are as smart as Spock, this is the first definition!')
     else:
         data['top_definition'] = False
-        # flash('Uh oh, you were not the first to add this definition, try to get some votes!')
+        flash('Uh oh, you were not the first to add this definition, try to get some votes!')
     definitions.insert_one(data)
     return redirect(url_for('get_definitions'))
 
