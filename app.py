@@ -55,8 +55,10 @@ def insert_definition():
     # If no matches were found for the same definition name, it will be the top definition
     if cursor_length == 0:
         data['top_definition'] = True
+        # flash('Congratulations, you are as smart as Spock, this is the first definition!')
     else:
         data['top_definition'] = False
+        # flash('Uh oh, you were not the first to add this definition, try to get some votes!')
     definitions.insert_one(data)
     return redirect(url_for('get_definitions'))
 
