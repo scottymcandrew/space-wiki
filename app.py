@@ -65,6 +65,23 @@ def insert_definition():
     return redirect(url_for('get_definitions'))
 
 
+@app.route('/search', methods=['POST'])
+def search_definitions():
+    definitions = mongo.db.definitions
+    data = request.form.to_dict()
+    # A dictionary is returned above, place the value into variable
+    search_text = data['definition_search']
+    # For the below search syntax to work, the MongoDB collection needs to have text indexes set for both keys
+    # this allows for case-insensitive searching - https://docs.mongodb.com/manual/core/index-text/#create-text-index
+    return render_template('search_results.html',
+                           definition_name_hits=definitions.find({"$text": {"$search": search_text}}),
+                           definition_hits=definitions.find({"$text": {"$search": search_text}}))
+
+
+# @app.route('/search_results')
+# def search_results():
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

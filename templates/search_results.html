@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block content %}
+
+    {% if definition_name_hits.count() > 0 %}
+        {% for d in definition_name_hits %}
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title">{{ d.definition_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
+                    <p class="card-text">{{ d.definition }}</p>
+                    <div class="card-links-container">
+                        <form id="vote-form" action="{{ url_for('add_vote', def_id=d._id) }}" method="post">
+                            <input type="hidden" id="def_id" name="def_id" value={{ d._id }}>
+                            <button type="submit" class="btn btn-info"><i class="fas fa-thumbs-up"></i>
+                                {{ d.votes }}</button>
+                        </form>
+                        <a href="https://en.wikipedia.org/wiki/{{ d.definition_name }}" target="_blank"
+                           class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% elif definition_hits.count() > 0 %}
+        {% for d in definition_name_hits %}
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title">{{ d.definition_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
+                    <p class="card-text">{{ d.definition }}</p>
+                    <div class="card-links-container">
+                        <form id="vote-form" action="{{ url_for('add_vote', def_id=d._id) }}" method="post">
+                            <input type="hidden" id="def_id" name="def_id" value={{ d._id }}>
+                            <button type="submit" class="btn btn-info"><i class="fas fa-thumbs-up"></i>
+                                {{ d.votes }}</button>
+                        </form>
+                        <a href="https://en.wikipedia.org/wiki/{{ d.definition_name }}" target="_blank"
+                           class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+
+    {% endif %}
+
+{% endblock %}
