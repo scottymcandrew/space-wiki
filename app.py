@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'space_definitions'
 app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
+# The following isn't used for security, this is just to enable flash messages
 app.secret_key = 'supersecretk3y'
 
 mongo = PyMongo(app)
