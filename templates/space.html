@@ -19,7 +19,7 @@
             {% for d in definitions %}
                 <div class="card text-white bg-dark">
                     <div class="card-body">
-                        <h5 class="card-title">{{ d.definition_name }}</h5>
+                        <h5 class="card-title">{{ d.definition_name }} <i class="fas fa-star"></i></h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
                         <p class="card-text">{{ d.definition }}</p>
                         <div class="card-links-container">
@@ -32,6 +32,9 @@
                                class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
                             <a href="#" class="card-link">Another link</a>
                         </div>
+                        <br>
+                        <p class="card-subtitle mb-2 text-muted footer-date">Created
+                            on: {{ d.date.strftime('%Y-%m-%d, %H:%M:%S') }}</p>
                     </div>
                 </div>
             {% endfor %}
@@ -40,7 +43,7 @@
             <div class="card bg-light text-center">
                 <img src="../static/images/saturn.png" alt="Planet Saturn" class="card-img-top">
                 <div class="card-body">
-                    <h3 class="card-title">The Final 'Definition' Frontier</h3>
+                    <h4 class="card-title">The Final 'Definition' Frontier</h4>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">Space and Astronomical terms that are out of this world!</p>
                     <a href="{{ url_for('add_definition') }}" class="card-link text-reset">

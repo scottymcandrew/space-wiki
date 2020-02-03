@@ -4,7 +4,11 @@
         {% for d in definition_name_hits %}
             <div class="card text-white bg-dark">
                 <div class="card-body">
-                    <h5 class="card-title">{{ d.definition_name }}</h5>
+                    <h5 class="card-title">{{ d.definition_name }}
+                        {% if d.top_definition %}
+                            <i class="fas fa-star"></i>
+                        {% endif %}
+                    </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
                     <p class="card-text">{{ d.definition }}</p>
                     <div class="card-links-container">
@@ -37,11 +41,20 @@
                            class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
                         <a href="#" class="card-link">Another link</a>
                     </div>
+                    <br>
+                    <p class="card-subtitle mb-2 text-muted footer-date">Created
+                        on: {{ d.date.strftime('%Y-%m-%d, %H:%M:%S') }}</p>
                 </div>
             </div>
         {% endfor %}
     {% else %}
-
+        <div class="row flash-row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    Uh oh, looks like no results :-( .... try again.
+                </div>
+            </div>
+        </div>
     {% endif %}
 
 {% endblock %}

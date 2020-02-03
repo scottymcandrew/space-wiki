@@ -25,13 +25,46 @@ def get_definitions():
 @app.route('/add_vote/<def_id>', methods=['POST'])
 def add_vote(def_id):
     definitions = mongo.db.definitions
-    # **************************************************
-    # ***** NEED TO ADD LOGIC TO CHECK TOP DEFINITION!!!
-    # **************************************************
     definitions.update_one({'_id': ObjectId(def_id)},
                            {
                                '$inc': {'votes': 1}
                            })
+    # Get definition entry
+    definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
+    # Check MongoDB Database if definition exists in more than one record
+    query = {'definition_name': definition_dict['definition_name']}
+    cursor = definitions.find(query)
+    # Get the cursor count
+    if cursor.count() > 1:
+        # Get the definition_name
+        definition_dict_name = definition_dict['definition_name']
+        # Get the current top definition
+        current_top = definitions.find_one({'$and':
+            [
+                {'top_definition': True},
+                {'definition_name': definition_dict_name}
+            ]
+        })
+        # Get the entry with the most votes after this vote. If there is a tie, oldest definition wins
+        cursor_top = definitions.find({'definition_name': definition_dict_name}).sort(
+            [('votes', -1), ('date', 1)]).limit(1)
+        # Convert cursor to dict. Whilst using a for loop it will only be a single entry due to limit(1) above
+        calculated_top = {}
+        for c in cursor_top:
+            calculated_top = c
+        # If the entry voted on is different to the current top, set new top definition
+        if current_top['_id'] != calculated_top['_id']:
+            definitions.update_one({'_id': current_top['_id']},
+                                   {'$set':
+                                       {
+                                           'top_definition': False
+                                       }})
+            definitions.update_one({'_id': calculated_top['_id']},
+                                   {'$set':
+                                       {
+                                           'top_definition': True
+                                       }})
+
     flash('Thank you for voting!')
     return redirect(url_for('get_definitions'))
 
@@ -76,10 +109,6 @@ def search_definitions():
     return render_template('search_results.html',
                            definition_name_hits=definitions.find({"$text": {"$search": search_text}}),
                            definition_hits=definitions.find({"$text": {"$search": search_text}}))
-
-
-# @app.route('/search_results')
-# def search_results():
 
 
 if __name__ == '__main__':
