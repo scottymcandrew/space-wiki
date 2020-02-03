@@ -29,7 +29,7 @@
             <div class="card text-white bg-dark">
                 <div class="card-body">
                     <h5 class="card-title">{{ d.definition_name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}, Original Author</h6>
                     <p class="card-text">{{ d.definition }}</p>
                     <div class="card-links-container">
                         <form id="vote-form" action="{{ url_for('add_vote', def_id=d._id) }}" method="post">
@@ -39,16 +39,19 @@
                         </form>
                         <a href="https://en.wikipedia.org/wiki/{{ d.definition_name }}" target="_blank"
                            class="card-link"><em>{{ d.definition_name }}</em> on Wikipedia</a>
-                        <a href="#" class="card-link">Another link</a>
                     </div>
                     <br>
-                    <p class="card-subtitle mb-2 text-muted footer-date">Created
-                        on: {{ d.date.strftime('%Y-%m-%d, %H:%M:%S') }}</p>
+                    <div class="card-footer">
+                        <small class="card-subtitle mb-2 text-muted footer-date">Created
+                            on: {{ d.date.strftime('%Y-%m-%d, %H:%M:%S') }}</small>
+                    </div>
                     {% if d.updated_when %}
-                        <p class="card-subtitle mb-2 text-muted footer-updated">
-                            Edited on: {{ d.updated_when.strftime('%Y-%m-%d, %H:%M:%S') }} by
-                            <strong>{{ d.editor }}</strong>
-                        </p>
+                        <div class="card-footer">
+                            <small class="card-subtitle mb-2 text-muted footer-updated">
+                                Edited on: {{ d.updated_when.strftime('%Y-%m-%d, %H:%M:%S') }} by
+                                <strong>{{ d.editor }}</strong>
+                            </small>
+                        </div>
                     {% endif %}
                 </div>
             </div>
