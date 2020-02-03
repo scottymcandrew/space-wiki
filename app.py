@@ -16,8 +16,8 @@ mongo = PyMongo(app)
 @app.route('/')
 @app.route('/space')
 def get_definitions():
-    # Grab the latest 5 definitions for display on the main page. Filter to only print ones marked as top (most votes)
-    coll = mongo.db.definitions.find({'top_definition': True}).sort("date", pymongo.DESCENDING).limit(5)
+    # Grab the latest 10 definitions for display on the main page. Filter to only print ones marked as top (most votes)
+    coll = mongo.db.definitions.find({'top_definition': True}).sort("date", pymongo.DESCENDING).limit(10)
     return render_template('space.html',
                            definitions=coll)
 
