@@ -119,6 +119,14 @@ def update_definition():
     return redirect(url_for('get_definitions'))
 
 
+@app.route('/delete_definition/<def_id>', methods=['POST'])
+def delete_definition(def_id):
+    definitions = mongo.db.definitions
+    definitions.delete_one({'_id': ObjectId(def_id)})
+    flash('I hope you meant to delete that!')
+    return redirect(url_for('get_definitions'))
+
+
 @app.route('/search', methods=['POST'])
 def search_definitions():
     definitions = mongo.db.definitions
@@ -127,9 +135,9 @@ def search_definitions():
     search_text = data['definition_search']
     # For the below search syntax to work, the MongoDB collection needs to have text indexes set for both keys
     # this allows for case-insensitive searching - https://docs.mongodb.com/manual/core/index-text/#create-text-index
+    # The single search will look in both definitions and definition names
     return render_template('search_results.html',
-                           definition_name_hits=definitions.find({"$text": {"$search": search_text}}),
-                           definition_hits=definitions.find({"$text": {"$search": search_text}}))
+                           definition_name_hits=definitions.find({"$text": {"$search": search_text}}))
 
 
 if __name__ == '__main__':

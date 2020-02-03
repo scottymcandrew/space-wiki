@@ -34,10 +34,17 @@
                             <div class="col">
                                 <div class="edit-container">
                                     <a href="{{ url_for('edit_definition', def_id=d._id) }}">
-                                        <button class="btn btn-info"><i class="fas fa-edit"></i> Click here to edit
+                                        <button class="btn btn-info"><i class="fas fa-edit"></i> Edit
                                         </button>
                                     </a>
                                 </div>
+                            </div>
+                            <div class="col">
+                                <form id="delete-form" action="{{ url_for('delete_definition', def_id=d._id) }}" method="post">
+                                    <input type="hidden" id="def_id" name="def_id" value={{ d._id }}>
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-bomb"></i>
+                                    **Delete**</button>
+                                </form>
                             </div>
                         </div>
                         <br>
