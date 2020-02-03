@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="card text-white bg-dark">
+        <div class="card-body">
+            <h5 class="card-title">Edit Definition</h5>
+            <form action="{{ url_for('update_definition') }}" method="POST">
+                <!-- app.py feeds in record ID -->
+                <input type="hidden" id="def_id" name="def_id" value="{{ definition._id }}">
+                <div class="form-group">
+                    <label class="card-subtitle mb-2 text-muted" for="input_name">Original Author</label>
+                    <input type="text" class="form-control" id="input_name" name="author" aria-describedby="author name"
+                           value="{{ definition.author }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label class="card-subtitle mb-2 text-muted" for="input_name">Edited By</label>
+                    <input type="text" class="form-control" id="input_name" name="editor" aria-describedby="author name">
+                </div>
+
+                <div class="form-group">
+                    <label class="card-subtitle mb-2 text-muted" for="definition_name_input">Definition</label>
+                    <input type="text" class="form-control" id="definition_name_input" name="definition_name"
+                           value="{{ definition.definition_name }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label class="card-subtitle mb-2 text-muted" for="definition_input">Enter the definition /
+                        description</label>
+                    <textarea class="form-control" id="definition_input" name="definition" rows="10">{{ definition.definition }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-block btn-info">Submit</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -44,6 +44,12 @@
                     <br>
                     <p class="card-subtitle mb-2 text-muted footer-date">Created
                         on: {{ d.date.strftime('%Y-%m-%d, %H:%M:%S') }}</p>
+                    {% if d.updated_when %}
+                        <p class="card-subtitle mb-2 text-muted footer-updated">
+                            Edited on: {{ d.updated_when.strftime('%Y-%m-%d, %H:%M:%S') }} by
+                            <strong>{{ d.editor }}</strong>
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

@@ -98,6 +98,27 @@ def insert_definition():
     return redirect(url_for('get_definitions'))
 
 
+@app.route('/edit_definition/<def_id>')
+def edit_definition(def_id):
+    definition = mongo.db.definitions.find_one({"_id": ObjectId(def_id)})
+    return render_template('edit_definition.html', definition=definition)
+
+
+@app.route('/update_definition', methods=['POST'])
+def update_definition():
+    definitions = mongo.db.definitions
+    # Take data from HTML form
+    data = request.form.to_dict()
+    definitions.update_one({'_id': ObjectId(data['def_id'])},
+                           {'$set': {
+                               'definition': data['definition'],
+                               'editor': data['editor'],
+                               'updated_when': datetime.datetime.now()
+                           }})
+    flash('Your edit has been accepted!')
+    return redirect(url_for('get_definitions'))
+
+
 @app.route('/search', methods=['POST'])
 def search_definitions():
     definitions = mongo.db.definitions
