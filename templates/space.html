@@ -15,11 +15,12 @@
                     </div>
                 {% endif %}
             {% endwith %}
-            {# Available items on DB: {{ d.definition_name }} {{ d.definition }} {{ d.author }} {{ d.date }} {{ d.votes }} {{ d.top_definition }} #}
+
             {% for d in definitions %}
                 <div class="card text-white bg-dark">
                     <div class="card-body">
-                        <h5 class="card-title">{{ d.definition_name }} <i class="fas fa-star"></i></h5>
+                        <h5 class="card-title">{{ d.definition_name }} {% if d.top_definition %}
+                            <i class="fas fa-star"></i>{% endif %}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ d.author }}, Original Author</h6>
                         <p class="card-text">{{ d.definition }}</p>
                         <div class="card-links-container row">
@@ -33,7 +34,8 @@
                             <div class="col">
                                 <div class="edit-container">
                                     <a href="{{ url_for('edit_definition', def_id=d._id) }}">
-                                        <button class="btn btn-info"><i class="fas fa-edit"></i>  Click here to edit</button>
+                                        <button class="btn btn-info"><i class="fas fa-edit"></i> Click here to edit
+                                        </button>
                                     </a>
                                 </div>
                             </div>
