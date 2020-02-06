@@ -90,10 +90,18 @@ def delete_definition(def_id):
     definitions = mongo.db.definitions
     # Get definition entry
     definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
-    print(definition_dict)
     # If definition to be deleted is the current top, a re-evaluation needs to be performed to set the new top
     if definition_dict['top_definition']:
+        # For the evaluation function to work, we set the votes to 0 to force a full recalculation
+        definitions.update_one({'_id': definition_dict['_id']},
+                               {'$set':
+                                   {
+                                       'votes': 0
+                                   }})
+        # With this set to 0, another definition must be the new top
         calculate_and_set_top_definition(def_id)
+
+    # With the new top set, this record is safe to delete
     definitions.delete_one({'_id': ObjectId(def_id)})
     flash('I hope you meant to delete that!')
     return redirect(url_for('get_definitions'))
@@ -117,6 +125,7 @@ def calculate_and_set_top_definition(def_id):
     definitions = mongo.db.definitions
     # Get definition entry
     definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
+    print(definition_dict)
     # Check MongoDB Database if definition exists in more than one record
     query = {'definition_name': definition_dict['definition_name']}
     cursor = definitions.find(query)
@@ -146,15 +155,6 @@ def calculate_and_set_top_definition(def_id):
                                            'top_definition': False
                                        }})
             definitions.update_one({'_id': calculated_top['_id']},
-                                   {'$set':
-                                       {
-                                           'top_definition': True
-                                       }})
-    # If there is just one entry left (such as when deleting the second-last), set the top definition to true
-    elif cursor.count() == 1:
-        for c in cursor:
-            print(c['definition_name'])
-            definitions.update_one({'definition_name': c['definition_name']},
                                    {'$set':
                                        {
                                            'top_definition': True
