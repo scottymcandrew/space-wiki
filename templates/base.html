@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <a href="{{ url_for('add_definition') }}"
                        class="card-link text-reset">
-                        <button type="button" class="btn btn-block btn-info"><i
+                        <button type="button" class="btn btn-custom"><i
                                 class="fas fa-plus-circle"></i>
                         </button>
                     </a>
@@ -42,7 +42,7 @@
 
             <form action="{{ url_for('search_definitions') }}" method="POST" class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" name="definition_search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-custom" type="submit">Search</button>
             </form>
         </div>
     </nav>
