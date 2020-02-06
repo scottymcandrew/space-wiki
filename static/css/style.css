@@ -1,3 +1,7 @@
+* {
+    font-family: 'Asap', sans-serif;
+}
+
 #vote-form {
     padding-bottom: 10px;
 }
@@ -42,7 +46,6 @@ nav {
 }
 
 .side-content {
-    margin-top: 25px;
     padding-left: 0;
 }
 

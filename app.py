@@ -30,42 +30,7 @@ def add_vote(def_id):
                            {
                                '$inc': {'votes': 1}
                            })
-    # Get definition entry
-    definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
-    # Check MongoDB Database if definition exists in more than one record
-    query = {'definition_name': definition_dict['definition_name']}
-    cursor = definitions.find(query)
-    # Get the cursor count
-    if cursor.count() > 1:
-        # Get the definition_name
-        definition_dict_name = definition_dict['definition_name']
-        # Get the current top definition
-        current_top = definitions.find_one({'$and':
-            [
-                {'top_definition': True},
-                {'definition_name': definition_dict_name}
-            ]
-        })
-        # Get the entry with the most votes after this vote. If there is a tie, oldest definition wins
-        cursor_top = definitions.find({'definition_name': definition_dict_name}).sort(
-            [('votes', -1), ('date', 1)]).limit(1)
-        # Convert cursor to dict. Whilst using a for loop it will only be a single entry due to limit(1) above
-        calculated_top = {}
-        for c in cursor_top:
-            calculated_top = c
-        # If the entry voted on is different to the current top, set new top definition
-        if current_top['_id'] != calculated_top['_id']:
-            definitions.update_one({'_id': current_top['_id']},
-                                   {'$set':
-                                       {
-                                           'top_definition': False
-                                       }})
-            definitions.update_one({'_id': calculated_top['_id']},
-                                   {'$set':
-                                       {
-                                           'top_definition': True
-                                       }})
-
+    calculate_and_set_top_definition(def_id)
     flash('Thank you for voting!')
     return redirect(url_for('get_definitions'))
 
@@ -123,6 +88,12 @@ def update_definition():
 @app.route('/delete_definition/<def_id>', methods=['POST'])
 def delete_definition(def_id):
     definitions = mongo.db.definitions
+    # Get definition entry
+    definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
+    print(definition_dict)
+    # If definition to be deleted is the current top, a re-evaluation needs to be performed to set the new top
+    if definition_dict['top_definition']:
+        calculate_and_set_top_definition(def_id)
     definitions.delete_one({'_id': ObjectId(def_id)})
     flash('I hope you meant to delete that!')
     return redirect(url_for('get_definitions'))
@@ -139,6 +110,55 @@ def search_definitions():
     # The single search will look in both definitions and definition names
     return render_template('search_results.html',
                            definition_name_hits=definitions.find({"$text": {"$search": search_text}}))
+
+
+# Utility functions
+def calculate_and_set_top_definition(def_id):
+    definitions = mongo.db.definitions
+    # Get definition entry
+    definition_dict = definitions.find_one({'_id': ObjectId(def_id)})
+    # Check MongoDB Database if definition exists in more than one record
+    query = {'definition_name': definition_dict['definition_name']}
+    cursor = definitions.find(query)
+    # Get the cursor count
+    if cursor.count() > 1:
+        # Get the definition_name
+        definition_dict_name = definition_dict['definition_name']
+        # Get the current top definition
+        current_top = definitions.find_one({'$and':
+            [
+                {'top_definition': True},
+                {'definition_name': definition_dict_name}
+            ]
+        })
+        # Get the entry with the most votes after this vote. If there is a tie, oldest definition wins
+        cursor_top = definitions.find({'definition_name': definition_dict_name}).sort(
+            [('votes', -1), ('date', 1)]).limit(1)
+        # Convert cursor to dict. Whilst using a for loop it will only be a single entry due to limit(1) above
+        calculated_top = {}
+        for c in cursor_top:
+            calculated_top = c
+        # If the entry voted on is different to the current top, set new top definition
+        if current_top['_id'] != calculated_top['_id']:
+            definitions.update_one({'_id': current_top['_id']},
+                                   {'$set':
+                                       {
+                                           'top_definition': False
+                                       }})
+            definitions.update_one({'_id': calculated_top['_id']},
+                                   {'$set':
+                                       {
+                                           'top_definition': True
+                                       }})
+    # If there is just one entry left (such as when deleting the second-last), set the top definition to true
+    elif cursor.count() == 1:
+        for c in cursor:
+            print(c['definition_name'])
+            definitions.update_one({'definition_name': c['definition_name']},
+                                   {'$set':
+                                       {
+                                           'top_definition': True
+                                       }})
 
 
 if __name__ == '__main__':
