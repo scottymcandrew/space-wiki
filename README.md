@@ -114,7 +114,9 @@ This site was developed using PyCharm and is hosted on Heroku. The backend datab
 - Installation
     1. Clone Github Repo.
     2. Create MongoDB Atlas database.
-    ***** TBC ********
+    3. Create Heroku repo with the source code, framework Python.
+    4. Configure Heroku env variables for IP, PORT and MONGO_URI (obtainable on MongoDB Atlas).
+    5. Activate the app on Heroku. May require Heroku CLI command: heroku ps:scale web=1
 
 ## Credits
 
