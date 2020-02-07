@@ -19,9 +19,15 @@ nav {
     padding-top: 0;
 }
 
+#flash-message-main,
+#flash-message-search {
+    background-color: #69306D !important;
+    color: #F2D7EE !important;
+}
+
 .card {
     margin: 10px 0 10px 0;
-    background-color: #0E103D!important;
+    background-color: #0E103D !important;
     color: #D3BCC0;
 }
 

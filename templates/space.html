@@ -6,7 +6,7 @@
                 {% if messages %}
                     <div class="row flash-row">
                         <div class="col-12">
-                            <div class="alert alert-danger flashes" role="alert">
+                            <div id="flash-message-main" class="alert alert-danger flashes" role="alert">
                                 {% for message in messages %}
                                     {{ message }}
                                 {% endfor %}

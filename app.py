@@ -117,7 +117,7 @@ def search_definitions():
     # this allows for case-insensitive searching - https://docs.mongodb.com/manual/core/index-text/#create-text-index
     # The single search will look in both definitions and definition names
     return render_template('search_results.html',
-                           definition_name_hits=definitions.find({"$text": {"$search": search_text}}))
+                           definition_name_hits=definitions.find({"$text": {"$search": search_text}}).sort("date", pymongo.DESCENDING))
 
 
 # Utility functions
