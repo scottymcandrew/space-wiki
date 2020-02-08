@@ -132,3 +132,4 @@ This site was developed using PyCharm and is hosted on Heroku. The backend datab
 
 - W3Schools for various coding help / templates.
 - Urban Dictionary for layout and functionality inspiration.
+- https://spaceplace.nasa.gov/glossary/en/ for the sample data set
