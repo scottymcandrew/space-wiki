@@ -111,18 +111,18 @@ The following is a list of all the technologies used in this website.
 
 This site was developed using PyCharm and is hosted on Heroku. The backend database is hosted on MongoDB Atlas.
 
-- Installation
+- Installation for your own environment.
     1. Clone Github Repo.
-    2. Create MongoDB Atlas database.
+    2. Create MongoDB Atlas database. Populate with sample information.
     3. Create Heroku repo with the source code, framework Python.
-    4. Configure Heroku env variables for IP, PORT and MONGO_URI (obtainable on MongoDB Atlas).
+    4. Configure Heroku env variables for IP, PORT and MONGO_URI. URI is obtainable on MongoDB Atlas: click Connect > Connect your application > Driver Python 3.6 or later. The connection string will be shown, use this for URI. **Please note** you will need to replace "test" with your collection name.
     5. Activate the app on Heroku. May require Heroku CLI command: heroku ps:scale web=1
 
 ## Credits
 
 ### Content
 
-- All text on the page was written by myself.
+- The sample definitions data-set was obtained at https://spaceplace.nasa.gov/glossary/en/
 
 ### Media
 
